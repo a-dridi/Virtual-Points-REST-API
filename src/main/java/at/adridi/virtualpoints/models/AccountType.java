@@ -29,4 +29,6 @@ public class AccountType implements Serializable{
 	private String title;
 	private Integer widthdrawLimit;
 
+	
+	
 }

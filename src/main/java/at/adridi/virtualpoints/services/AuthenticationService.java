@@ -6,8 +6,9 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import at.adridi.virtualpoints.dto.RegistrationRequest;
+import at.adridi.virtualpoints.models.LoginRequest;
 import at.adridi.virtualpoints.models.Owner;
+import at.adridi.virtualpoints.models.RegistrationRequest;
 import at.adridi.virtualpoints.repositories.OwnerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,4 +53,6 @@ public class AuthenticationService {
 			return 3;
 		}
 	}
+	
+
 }

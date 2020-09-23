@@ -12,7 +12,7 @@ import at.adridi.virtualpoints.models.Owner;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-	Optional<Account> findByAccountId(Integer accountId);
-	List<Optional<Account>> findByOwner(Owner owner);
+	Optional<Account> findByAccountId(Long accountId);
+	Optional<List<Account>> findByOwner(Owner owner);
 
 }

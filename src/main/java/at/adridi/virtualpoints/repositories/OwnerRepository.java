@@ -10,7 +10,8 @@ import at.adridi.virtualpoints.models.Owner;
 
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Long> {
-
+	
+	Optional<Owner> findByOwnerId(Long id);
 	Optional<Owner> findByEmail(String email);
 	Optional<List<Owner>> findByForename(String forename);
 	Optional<List<Owner>> findBySurname(String surname);

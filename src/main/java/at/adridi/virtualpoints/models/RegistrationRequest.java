@@ -1,4 +1,4 @@
-package at.adridi.virtualpoints.dto;
+package at.adridi.virtualpoints.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
