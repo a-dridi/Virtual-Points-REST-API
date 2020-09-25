@@ -50,7 +50,7 @@ public class OwnerController {
 	}
 	
 	@GetMapping("/get/byId/{id}")
-	public ResponseEntity<Owner> getOwnerById(@PathVariable @Valid Long id){
+	public ResponseEntity<Owner> getOwnerById(@PathVariable Long id){
 		try {
 			return status(HttpStatus.OK).body(this.ownerService.getOwnerById(id));
 		} catch (DataValueNotFoundException e) {
@@ -59,7 +59,7 @@ public class OwnerController {
 	}
 
 	@GetMapping("/get/byEmail/{email}")
-	public ResponseEntity<Owner> getOwnerByEmail(@PathVariable @Valid String email){
+	public ResponseEntity<Owner> getOwnerByEmail(@PathVariable String email){
 		try {
 			return status(HttpStatus.OK).body(this.ownerService.getOwnerByEmail(email));
 		} catch (DataValueNotFoundException e) {
@@ -68,7 +68,7 @@ public class OwnerController {
 	}	
 	
 	@GetMapping("/get/byForename/{forename}")
-	public ResponseEntity<List<Owner>> getAllOwnerByForename(@PathVariable @Valid String forename) {
+	public ResponseEntity<List<Owner>> getAllOwnerByForename(@PathVariable String forename) {
 		List<Owner> ownerList = this.ownerService.getOwnerByForename(forename);
 		if(!CollectionUtils.isEmpty(ownerList)) {
 			return status(HttpStatus.OK).body(ownerList);
@@ -78,7 +78,7 @@ public class OwnerController {
 	}
 	
 	@GetMapping("/get/bySurname/{surname}")
-	public ResponseEntity<List<Owner>> getAllOwnerBySurname(@PathVariable @Valid String surname) {
+	public ResponseEntity<List<Owner>> getAllOwnerBySurname(@PathVariable String surname) {
 		List<Owner> ownerList = this.ownerService.getOwnerBySurname(surname);
 		if(!CollectionUtils.isEmpty(ownerList)) {
 			return status(HttpStatus.OK).body(ownerList);
@@ -88,7 +88,7 @@ public class OwnerController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Owner> updateOwner(@PathVariable @Valid Long id, @Valid @RequestBody Owner owner) {
+	public ResponseEntity<Owner> updateOwner(@PathVariable Long id, @RequestBody Owner owner) {
 		if (this.ownerService.update(owner)) {
 			return ResponseEntity.ok(owner);
 		} else {
@@ -97,7 +97,7 @@ public class OwnerController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteAccountType(@PathVariable @Valid Long ownerId) {
+	public ResponseEntity<String> deleteAccountType(@PathVariable Long ownerId) {
 		if (this.ownerService.deleteById(ownerId)) {
 			return ResponseEntity.ok("Your owner was deleted successfully.");
 		} else {

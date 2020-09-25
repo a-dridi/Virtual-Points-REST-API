@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Manage and save virtual points accounts
+ * 
  * @author A.Dridi
  *
  */
@@ -49,7 +50,7 @@ public class AccountController {
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Account> getAccountById(@PathVariable @Valid Long id) {
+	public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
 		try {
 			return status(HttpStatus.OK).body(accountService.getAccountById(id));
 		} catch (DataValueNotFoundException e) {
@@ -58,7 +59,7 @@ public class AccountController {
 	}
 
 	@PostMapping("/open")
-	public ResponseEntity<String> openAccount(@RequestBody @Valid Account account) {
+	public ResponseEntity<String> openAccount(@RequestBody Account account) {
 		if (this.accountService.save(account)) {
 			return ResponseEntity.ok("A new account was opened successfully. ");
 		} else {
@@ -67,7 +68,7 @@ public class AccountController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Account> updateAccount(@PathVariable @Valid Long id, @Valid @RequestBody Account account) {
+	public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
 		if (this.accountService.update(account)) {
 			return ResponseEntity.ok(account);
 		} else {
@@ -76,11 +77,41 @@ public class AccountController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteAccount(@PathVariable @Valid Long accountId) {
-		if (this.accountService.deleteById(accountId)) {
+	public ResponseEntity<String> deleteAccount(@PathVariable Long id) {
+		if (this.accountService.deleteById(id)) {
 			return ResponseEntity.ok("Your account was deleted successfully.");
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error. Account Id does not exists!");
+		}
+	}
+
+	@GetMapping("/widthdraw/{id}/{amount}")
+	public ResponseEntity<String> widthdrawFromAccount(@PathVariable Long id, @PathVariable Integer amount) {
+		try {
+			Integer newBalance = this.accountService.widthdraw(id, amount);
+			return ResponseEntity.ok(amount + " were widthdrawn. You have now a balance of " + newBalance + ".");
+		} catch (DataValueNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@GetMapping("/deposit/{id}/{amount}")
+	public ResponseEntity<String> depositOnAccount(@PathVariable Long id, @PathVariable Integer amount) {
+		try {
+			Integer newBalance = this.accountService.deposit(id, amount);
+			return ResponseEntity.ok(amount + " were deposit. You have now a balance of " + newBalance + ".");
+		} catch (DataValueNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@GetMapping("/deposit/{senderAccountId}/{recipientAccountId}/{amount}")
+	public ResponseEntity<String> depositOnAccount(@PathVariable Long senderAccountId, @PathVariable Long recipientAccountId, @PathVariable Integer amount) {
+		try {
+			Integer newBalance = this.accountService.transfer(senderAccountId, recipientAccountId, amount);
+			return ResponseEntity.ok(amount + " were transfered to the account number" + recipientAccountId + ". You have now a balance of " + newBalance + ".");
+		} catch (DataValueNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 }

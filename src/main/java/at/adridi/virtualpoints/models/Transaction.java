@@ -28,6 +28,8 @@ public class Transaction implements Serializable{
 	private Integer amount;
 	private Integer transactionType;
 	@ManyToOne(cascade=CascadeType.ALL)
-	private Account account;
-	
+	private Account senderAccount;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Account recipientAccount;
+
 }

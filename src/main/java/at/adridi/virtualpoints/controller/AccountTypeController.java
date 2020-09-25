@@ -48,7 +48,7 @@ public class AccountTypeController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<AccountType> getAccountTypeById(@PathVariable @Valid Long id){
+	public ResponseEntity<AccountType> getAccountTypeById(@PathVariable Long id){
 		try {
 			return status(HttpStatus.OK).body(accountTypeService.getAccountTypeById(id));
 		} catch (DataValueNotFoundException e) {
@@ -57,7 +57,7 @@ public class AccountTypeController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<AccountType> updateAccountType(@PathVariable @Valid Long id, @Valid @RequestBody AccountType accountType) {
+	public ResponseEntity<AccountType> updateAccountType(@PathVariable Long id, @RequestBody AccountType accountType) {
 		if (this.accountTypeService.update(accountType)) {
 			return ResponseEntity.ok(accountType);
 		} else {
@@ -66,7 +66,7 @@ public class AccountTypeController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteAccountType(@PathVariable @Valid Long accountTypeId) {
+	public ResponseEntity<String> deleteAccountType(@PathVariable Long accountTypeId) {
 		if (this.accountTypeService.deleteById(accountTypeId)) {
 			return ResponseEntity.ok("Your account type was deleted successfully.");
 		} else {

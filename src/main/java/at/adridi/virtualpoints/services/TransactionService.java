@@ -72,7 +72,7 @@ public class TransactionService {
 	public List<Transaction> getAllTransactionsByAccountId(long accountId) {
 		try {
 			Account account = this.accountService.getAccountById(accountId);
-			return this.transactionRepository.findByAccount(account).orElseThrow(
+			return this.transactionRepository.findBySenderAccount(account).orElseThrow(
 					() -> new DataValueNotFoundException("Transactions could not be loaded. Account does not exist."));
 		} catch (DataValueNotFoundException | NullPointerException e) {
 			log.error(e.getMessage());
@@ -92,9 +92,10 @@ public class TransactionService {
 		}
 		Transaction transaction = this.getTransactionById(updatedTransaction.getTransactionId());
 		if (transaction != null) {
-			transaction.setAccount(updatedTransaction.getAccount());
+			transaction.setSenderAccount(updatedTransaction.getSenderAccount());
 			transaction.setAmount(updatedTransaction.getAmount());
 			transaction.setTransactionType(updatedTransaction.getTransactionType());
+			transaction.setRecipientAccount(updatedTransaction.getRecipientAccount());
 			if (this.transactionRepository.save(transaction) != null) {
 				return true;
 			} else {
@@ -112,7 +113,7 @@ public class TransactionService {
 	 * @return true if successful
 	 */
 	public boolean deleteById(Long transactionId) {
-		if (transactionId == null) {
+		if (transactionId == null || transactionId==0) {
 			return false;
 		}
 		Transaction transaction = this.getTransactionById(transactionId);
@@ -124,7 +125,7 @@ public class TransactionService {
 				return false;
 			}
 		} else {
-			return true;
+			return false;
 		}
 	}
 

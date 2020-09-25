@@ -116,7 +116,7 @@ public class OwnerService {
 	 * @return true if successful
 	 */
 	public boolean deleteById(Long ownerId) {
-		if (ownerId == null) {
+		if (ownerId == null || ownerId==0) {
 			return false;
 		}
 		Owner owner = this.getOwnerById(ownerId);
@@ -128,7 +128,7 @@ public class OwnerService {
 				return false;
 			}
 		} else {
-			return true;
+			return false;
 		}
 	}
 }

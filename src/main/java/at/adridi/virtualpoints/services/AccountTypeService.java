@@ -90,7 +90,7 @@ public class AccountTypeService {
 	 * @return true if successful
 	 */
 	public boolean deleteById(Long accountTypeId) {
-		if (accountTypeId == null) {
+		if (accountTypeId == null || accountTypeId==0) {
 			return false;
 		}
 		AccountType accountType = this.getAccountTypeById(accountTypeId);
@@ -102,7 +102,7 @@ public class AccountTypeService {
 				return false;
 			}
 		} else {
-			return true;
+			return false;
 		}
 	}
 }

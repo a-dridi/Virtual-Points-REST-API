@@ -49,7 +49,7 @@ public class TransactionController {
 	}
 	
 	@GetMapping("/get/byId/{id}")
-	public ResponseEntity<Transaction> getTransactionById(@PathVariable @Valid Long id){
+	public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id){
 		try {
 			return status(HttpStatus.OK).body(this.transactionService.getTransactionById(id));
 		} catch (DataValueNotFoundException e) {
@@ -59,7 +59,7 @@ public class TransactionController {
 
 
 	@GetMapping("/get/byAccountId/{accountId}")
-	public ResponseEntity<List<Transaction>> getAllTransactionByAccountId(@PathVariable @Valid Long accountId) {
+	public ResponseEntity<List<Transaction>> getAllTransactionByAccountId(@PathVariable Long accountId) {
 		List<Transaction> transactionOfAccountIdList = this.transactionService.getAllTransactionsByAccountId(accountId);
 		if(!CollectionUtils.isEmpty(transactionOfAccountIdList)) {
 			return status(HttpStatus.OK).body(transactionOfAccountIdList);
@@ -69,7 +69,7 @@ public class TransactionController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Transaction> updateTransaction(@PathVariable @Valid Long id, @Valid @RequestBody Transaction transaction) {
+	public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @Valid @RequestBody Transaction transaction) {
 		if (this.transactionService.update(transaction)) {
 			return ResponseEntity.ok(transaction);
 		} else {
@@ -78,7 +78,7 @@ public class TransactionController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteTransaction(@PathVariable @Valid Long transactionId) {
+	public ResponseEntity<String> deleteTransaction(@PathVariable Long transactionId) {
 		if (this.transactionService.deleteById(transactionId)) {
 			return ResponseEntity.ok("Your transaction was deleted successfully.");
 		} else {

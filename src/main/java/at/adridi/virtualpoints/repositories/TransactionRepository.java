@@ -13,6 +13,6 @@ import at.adridi.virtualpoints.models.Transaction;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
 	Optional<Transaction> findByTransactionId(Long transactionId);
-	Optional<List<Transaction>> findByAccount(Account account);
+	Optional<List<Transaction>> findBySenderAccount(Account account);
 
 }
